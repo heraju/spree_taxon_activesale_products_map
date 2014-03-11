@@ -1,0 +1,43 @@
+<h1>Products</h1>
+
+<h6>Total Products: <%= @products.count %></h6>
+<%= link_to "Edit all Products", "javascript:void(0)" ,:id=>"edit_all_products"%>
+<div id="edit_all_products_div" style="display:none">
+	<%= form_tag('/admin/taxon_map',remote: true, id: "taxon") do %>
+ 		<%= label_tag(:available_on, "available_on") %>
+ 		<%= text_field_tag :available_on, :value => datepicker_field_value(@products.first.available_on), :class => 'datepicker' %>
+		<%= submit_tag("Update") %>
+
+	<% end %>
+</div>
+<br/>
+<table>
+<thead>
+<th>Name</th>
+<th>Available On</th>
+<th>Actions</th>
+
+
+</thead>
+<tbody>
+
+<% if @products %>
+	<% @products.each do |product| %>
+	<tr>
+	<td><%= product.name %></td>
+	<td><%= product.available_on %></td>
+	<td><%= link_to "Edit", "/admin/products/#{product.permalink}/edit" ,:id=>"products", :remote => true %></td>
+	
+	
+	</tr>
+<% end %>
+<% end %>
+
+</tbody>
+</table>
+
+<script type="text/javascript">
+$(document).on('click','#edit_all_products',function(){
+	$("#edit_all_products_div").show();
+});
+</script>

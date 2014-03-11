@@ -1,0 +1,42 @@
+<h1>Taxon Active-Sale Products</h1>
+
+<br/>
+
+<%= form_tag('/admin/taxon_map',remote: true, id: "taxon") do %>
+ <%= label_tag(:permalink, "permalink") %>
+  <%= text_field_tag(:permalink) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<br/>
+
+<div id="taxon_update">
+<% if @taxons %>
+	<% @taxons.each do |taxon| %>
+	<%= taxon.inspect %>
+
+	<% end %>
+<% end %>	
+</div>
+
+<div id="active_sale_update"></div>
+<div id="active_sale_edit"></div>
+<div id="products_update"></div>
+
+<script type="text/javascript">
+$(document).on('ajax:success','#taxon',function(event, data){
+	$("#taxon_update").html(data);
+	$("#active_sale_update").html("");
+});
+$(document).on('ajax:success','#active_sale',function(event, data){
+	$("#active_sale_update").html(data);
+	$("#products_update").html("");
+});
+$(document).on('ajax:success','#products',function(event, data){
+	$("#products_update").html(data);
+	$("#active_sale_update").html("");
+});
+
+
+</script>
+
